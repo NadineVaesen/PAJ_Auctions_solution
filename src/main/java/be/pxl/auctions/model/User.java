@@ -15,7 +15,8 @@ import java.time.temporal.ChronoUnit;
 @Table(name = "users")
 @NamedQueries({
 		@NamedQuery(name = "findUserByEmail", query = "SELECT u FROM User u WHERE u.email=:email"),
-		@NamedQuery(name = "findAllUsers", query = "SELECT u FROM User u") })
+		@NamedQuery(name = "findAllUsers", query = "SELECT u FROM User u"),
+})
 public class User {
 
 	@Id

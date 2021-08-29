@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 	@Autowired
 	private UserDao userDao;
@@ -81,7 +81,7 @@ public class UserService {
 		try {
 			user.setDateOfBirth(LocalDate.parse(userCreateResource.getDateOfBirth(), DATE_FORMAT));
 		} catch (DateTimeParseException e) {
-			throw new InvalidDateException("[" + user.getDateOfBirth() + "] is not a valid date. Excepted format: dd/mm/yyyy");
+			throw new InvalidDateException("[" + user.getDateOfBirth() + "] is not a valid date. Excepted format: dd/MM/yyyy");
 		}
 		user.setEmail(userCreateResource.getEmail());
 		return user;
