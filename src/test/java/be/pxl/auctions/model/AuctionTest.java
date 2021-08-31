@@ -27,7 +27,7 @@ public class AuctionTest {
     @Test
     public void isFinishedReturnsTrueIfDateIsBeforeToday() {
 
-        auction.setEndDate(LocalDate.now().minusDays(1), DATE_FORMAT);
+        auction.setEndDate(LocalDate.now().minusDays(1));
         auction.setDescription(GUIDGenerator.GENERATOR_NAME);
 
         assertTrue(auction.isFinished());
@@ -36,7 +36,7 @@ public class AuctionTest {
     @Test
     public void isFinishedReturnsFalseIfDateIsAfterToday() {
 
-        auction.setEndDate(LocalDate.now().plusDays(1), DATE_FORMAT);
+        auction.setEndDate(LocalDate.now().plusDays(1));
         auction.setDescription(GUIDGenerator.GENERATOR_NAME);
 
         assertFalse(auction.isFinished());
@@ -64,9 +64,9 @@ public class AuctionTest {
     }
 
     private LocalDate generateRandomDate() {
-        double year = (double) (random.nextInt(2010 - 1900 + 1) + 1900);
-        double month = (double) (random.nextInt(12 - 1 + 1) + 1);
-        double day = (double) (random.nextInt(31 - 1 + 1) + 1);
+        double year = random.nextInt(2010 - 1900 + 1) + 1900;
+        double month = random.nextInt(12 - 1 + 1) + 1;
+        double day = random.nextInt(31 - 1 + 1) + 1;
         return LocalDate.of((int) year, (int) month, (int) day);
     }
 

@@ -35,7 +35,12 @@ public class AuctionService {
     }
 
     public AuctionDTO createAuction(AuctionCreateResource auctionCreateResource){
-        return mapToAuctionDTO(auctionDao.saveAuction(mapToAuction(auctionCreateResource)));
+        AuctionDTO auctionDTO;
+        Auction auction;
+        auction = mapToAuction(auctionCreateResource);
+        auctionDao.saveAuction(auction);
+        auctionDTO = mapToAuctionDTO(mapToAuction(auctionCreateResource));
+        return auctionDTO;
     }
 
     public List<AuctionDTO> findAllAuctions() {
@@ -44,7 +49,8 @@ public class AuctionService {
 
     private AuctionDTO mapToAuctionDTO(Auction auction) {
         AuctionDTO auctionDTO = new AuctionDTO();
-        auctionDTO.setId(auctionDTO.getId());
+        auctionDTO.setId(auction.getId());
+        auctionDTO.setEndDate(auction.getEndDate());
         auctionDTO.setBidList(auction.getBids());
         auctionDTO.setHighestBid(auction.findHighestBid().getAmount());
         auctionDTO.setNumberOfBids(auction.getBids().size());
@@ -52,13 +58,13 @@ public class AuctionService {
         return auctionDTO;
     }
 
-    private Auction mapToAuction(AuctionCreateResource auctionCreateResource) {
+    private Auction mapToAuction(AuctionCreateResource auctionCreateResource) throws InvalidDateException {
         Auction auction = new Auction();
         auction.setDescription(auctionCreateResource.getDescription());
         try {
-            auction.setEndDate(LocalDate.parse(auctionCreateResource.getEndDate()), DATE_FORMAT);
+            auction.setEndDate(LocalDate.parse(auctionCreateResource.getEndDate(), DATE_FORMAT));
         } catch (DateTimeParseException e) {
-            throw new InvalidDateException("[" + auctionCreateResource.getEndDate() + "] is not a valid date. Excepted format: dd/MM/yyyy");
+            throw new InvalidDateException("[" + auctionCreateResource.getEndDate() + "] is not a valid date. Excepted format: dd/MM/yyyy" + e);
         }
         return auction;
     }

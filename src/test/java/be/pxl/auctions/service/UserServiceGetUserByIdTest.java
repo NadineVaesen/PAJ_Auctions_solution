@@ -25,6 +25,7 @@ public class UserServiceGetUserByIdTest {
 
 	@Mock
 	private UserDao userDao;
+
 	@InjectMocks
 	private UserService userService;
 	private User user;
@@ -35,7 +36,7 @@ public class UserServiceGetUserByIdTest {
 		user.setId(USER_ID);
 		user.setFirstName("Mark");
 		user.setLastName("Zuckerberg");
-		user.setDateOfBirth(LocalDate.of(1989, 5, 3));
+		user.setDateOfBirth(LocalDate.of(1984, 5, 14));
 		user.setEmail("mark@facebook.com");
 	}
 

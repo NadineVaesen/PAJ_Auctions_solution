@@ -13,6 +13,15 @@ public class AuctionDTO {
     private int numberOfBids;
     private double highestBid;
     private User highestBidBy;
+    private LocalDate endDate;
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 
     public int getNumberOfBids() {
         return numberOfBids;

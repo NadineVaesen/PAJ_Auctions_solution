@@ -34,7 +34,7 @@ public class AuctionRest {
         return auctionService.getAuctionById(auctionId);
     }
 
-    @PostMapping
+    @ PostMapping
     public AuctionDTO createAuction(@RequestBody AuctionCreateResource auctionCreateResource){
         return auctionService.createAuction(auctionCreateResource);
     }

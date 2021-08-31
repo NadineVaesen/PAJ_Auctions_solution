@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +15,11 @@ import java.util.Optional;
 public class AuctionDaoImpl implements AuctionDao {
 
     private static final Logger LOGGER = LogManager.getLogger(AuctionDaoImpl.class);
+
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Override
+    @Transactional
     public Auction saveAuction(Auction auction) {
         LOGGER.info("Saving auction [" + auction.getDescription() + "]");
         entityManager.persist(auction);

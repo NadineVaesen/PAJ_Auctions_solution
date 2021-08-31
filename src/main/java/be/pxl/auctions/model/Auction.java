@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @NamedQueries(
@@ -19,7 +20,6 @@ public class Auction {
     private LocalDate endDate;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Bid> bids = new ArrayList<>();
-
 
     public Auction() {
     }
@@ -44,7 +44,7 @@ public class Auction {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate, DateTimeFormatter dateFormat) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -61,9 +61,25 @@ public class Auction {
     }
 
     public Bid findHighestBid() {
-        double highestBid = 0;
-        bids.sort(Comparator.comparing(Bid::getAmount).reversed());
-        return bids.get(0);
+        if (bids.isEmpty()) {
+            return new Bid();
+        } else {
+            bids.sort(Comparator.comparing(Bid::getAmount).reversed());
+            return bids.get(0);
+        }
+
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Auction)) return false;
+        Auction auction = (Auction) o;
+        return getId() == auction.getId() && Objects.equals(getDescription(), auction.getDescription()) && Objects.equals(getEndDate(), auction.getEndDate()) && Objects.equals(getBids(), auction.getBids());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getDescription(), getEndDate(), getBids());
+    }
 }
